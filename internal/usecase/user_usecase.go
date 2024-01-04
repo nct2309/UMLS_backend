@@ -118,6 +118,7 @@ func (s *userUsecase) ReserveBook(ctx context.Context, userID string, bookID str
 		StartDate:    startDate,
 		EndDate:      endDate,
 		ExtendedDate: extendedDate,
+		Location:     book.Location,
 	})
 
 	// update user reserving book
@@ -184,6 +185,7 @@ func (s *userUsecase) BorrowBook(ctx context.Context, userID string, bookID stri
 		StartDate:    startDate,
 		EndDate:      endDate,
 		ExtendedDate: extendedDate,
+		Location:     book.Location,
 	})
 
 	// update user reserving book

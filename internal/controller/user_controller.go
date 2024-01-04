@@ -53,14 +53,18 @@ func (h UserController) create(ctx *gin.Context) {
 	// }
 
 	user, error := h.userService.CreateUser(ctx, &entity.User{
-		Username:  request.GetUsername(),
-		Password:  request.GetPassword(),
-		Name:      request.GetName(),
-		Phonenum:  request.GetPhonenum(),
-		Age:       request.GetAge(),
-		SSN:       request.GetSSN(),
-		Role:      request.GetRole(),
-		CountFine: request.GetCountFine(),
+		Username:      request.GetUsername(),
+		Password:      request.GetPassword(),
+		Name:          request.GetName(),
+		Phonenum:      request.GetPhonenum(),
+		Age:           request.GetAge(),
+		Gender:        request.GetGender(),
+		SSN:           request.GetSSN(),
+		Role:          request.GetRole(),
+		CountFine:     request.GetCountFine(),
+		ReservingList: request.GetReservingList(),
+		BorrowingList: request.GetBorrowingList(),
+		BorrowedList:  request.GetBorrowedList(),
 	})
 	if error != nil {
 		fmt.Println("create user failed:", error.Error())
@@ -96,9 +100,18 @@ func (h UserController) update(ctx *gin.Context) {
 	}
 
 	user, err := h.userService.UpdateUser(ctx, request.GetIDFromURL(ctx), &entity.User{
-		Username: request.GetUsername(),
-		Password: request.GetPassword(),
-		Name:     request.GetName(),
+		Username:      request.GetUsername(),
+		Password:      request.GetPassword(),
+		Name:          request.GetName(),
+		Phonenum:      request.GetPhonenum(),
+		Age:           request.GetAge(),
+		Gender:        request.GetGender(),
+		SSN:           request.GetSSN(),
+		Role:          request.GetRole(),
+		CountFine:     request.GetCountFine(),
+		ReservingList: request.GetReservingList(),
+		BorrowingList: request.GetBorrowingList(),
+		BorrowedList:  request.GetBorrowedList(),
 	})
 
 	if err != nil {

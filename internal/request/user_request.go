@@ -24,6 +24,10 @@ type UserRequest interface {
 	GetRole() int
 	GetCountFine() int
 	GetBookIDFromURL(c *gin.Context) string
+	GetGender() string
+	GetReservingList() []entity.UserActivity
+	GetBorrowingList() []entity.UserActivity
+	GetBorrowedList() []entity.UserActivity
 	// GetToken() string
 	// GetRefreshToken() string
 	// GetExpireTime() int64
@@ -80,6 +84,22 @@ func (r *userRequest) GetCountFine() int {
 
 func (r *userRequest) GetBookIDFromURL(c *gin.Context) string {
 	return c.Param("bookId")
+}
+
+func (r *userRequest) GetGender() string {
+	return r.user.Gender
+}
+
+func (r *userRequest) GetReservingList() []entity.UserActivity {
+	return r.user.ReservingList
+}
+
+func (r *userRequest) GetBorrowingList() []entity.UserActivity {
+	return r.user.BorrowingList
+}
+
+func (r *userRequest) GetBorrowedList() []entity.UserActivity {
+	return r.user.BorrowedList
 }
 
 // func (r *userRequest) GetToken() string {
