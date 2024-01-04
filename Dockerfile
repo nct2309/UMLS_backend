@@ -1,3 +1,5 @@
+ENV GOPROXY=""
+
 # Use the official Golang 1.21 image as the base image
 FROM golang:1.21
 
@@ -18,3 +20,4 @@ EXPOSE 8080
 
 # Command to run the executable
 CMD ["./myapp"]
+
