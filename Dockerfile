@@ -7,6 +7,9 @@ WORKDIR /app
 # Copy the main.go file into the container at /app
 COPY . /app
 
+# Download and install any required dependencies
+RUN go mod download
+
 # Build the binary
 RUN go build -o myapp .
 
