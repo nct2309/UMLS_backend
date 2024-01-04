@@ -4,7 +4,8 @@ FROM golang:1.21
 # Set the working directory inside the container
 WORKDIR /app
 
-ENV GOPROXY=""
+RUN export GOPROXY=""
+RUN export GO111MODULE=on
 
 # Copy the main.go file into the container at /app
 COPY . /app
