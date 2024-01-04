@@ -1,10 +1,10 @@
-ENV GOPROXY=""
-
 # Use the official Golang 1.21 image as the base image
 FROM golang:1.21
 
 # Set the working directory inside the container
 WORKDIR /app
+
+ENV GOPROXY=""
 
 # Copy the main.go file into the container at /app
 COPY . /app
