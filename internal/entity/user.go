@@ -17,6 +17,7 @@ type User struct {
 	ID            primitive.ObjectID `json:"id,omitempty" bson:"_id,omitempty"`
 	Phonenum      string             `json:"phonenum" bson:"phonenum"`
 	Age           int                `json:"age" bson:"age"`
+	Gender        string             `json:"gender" bson:"gender"`
 	SSN           string             `json:"ssn" bson:"ssn"`
 	Name          string             `json:"name" bson:"name"`
 	Role          int                `json:"flag" bson:"flag"` // user for identify 1 for member, 2 for librarian or manager is 3?
@@ -34,6 +35,7 @@ type UserActivity struct {
 	StartDate    time.Time          `json:"startDate" bson:"startDate"`
 	EndDate      time.Time          `json:"endDate" bson:"endDate"`
 	ExtendedDate time.Time          `json:"extendedDate" bson:"extendedDate"`
+	Location     string             `json:"location" bson:"location"`
 }
 
 // type Member struct {

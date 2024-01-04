@@ -45,11 +45,19 @@ func (h BookController) CreateBook(ctx *gin.Context) {
 	book, error := h.bookService.CreateBook(ctx, &entity.Book{
 		ISBN:         request.GetISBN(),
 		Name:         request.GetName(),
+		Author:       request.GetAuthor(),
+		Genre:        request.GetGenre(),
+		Description:  request.GetDescription(),
+		Publisher:    request.GetPublisher(),
+		PublishDate:  request.GetPulishDate(),
+		TotalPages:   request.GetTotalPages(),
 		Condition:    request.GetCondition(),
 		Availability: request.GetAvailability(),
 		Location:     request.GetLocation(),
-		Author:       request.GetAuthor(),
 		ImageURL:     request.GetImageURL(),
+		StartDate:    request.GetStartDate(),
+		EndDate:      request.GetEndDate(),
+		ExtendedDate: request.GetExtendedDate(),
 	})
 
 	if error != nil {

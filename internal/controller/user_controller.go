@@ -32,6 +32,8 @@ func SetupUserRoutes(router *gin.Engine, userService usecase.UserUsecase) {
 		userRoutes.POST("/:id/reserve/:bookId", userController.reserve)
 		userRoutes.POST("/:id/extendReserve/:bookId", userController.borrow)
 		userRoutes.POST("/:id/extendBorrow/:bookId", userController.extendBorrow)
+		userRoutes.GET("/:id/borrows", userController.getBorrowList)
+		userRoutes.GET("/:id/reservations", userController.getReservationList)
 	}
 }
 
@@ -193,4 +195,36 @@ func (h UserController) extendBorrow(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{"message": "Borrow extend successful"})
+}
+
+func (h UserController) getBorrowList(ctx *gin.Context) {
+	request := h.NewUserRequest()
+
+	borrowingList, borrowedList, err := h.userService.GetBorrowList(ctx, request.GetIDFromURL(ctx))
+
+	if err != nil {
+		fmt.Println("get borrow list failed:", err.Error())
+		ctx.AbortWithError(http.StatusBadRequest, err)
+		// 404 not found http status code
+		ctx.JSON(http.StatusNotFound, gin.H{"message": "Get borrow list failed", "error": err.Error()})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{"borrowingList": borrowingList, "borrowedList": borrowedList})
+}
+
+func (h UserController) getReservationList(ctx *gin.Context) {
+	request := h.NewUserRequest()
+
+	reservations, err := h.userService.GetReservationList(ctx, request.GetIDFromURL(ctx))
+
+	if err != nil {
+		fmt.Println("get reservation list failed:", err.Error())
+		ctx.AbortWithError(http.StatusBadRequest, err)
+		// 404 not found http status code
+		ctx.JSON(http.StatusNotFound, gin.H{"message": "Get reservation list failed", "error": err.Error()})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{"reservations": reservations})
 }

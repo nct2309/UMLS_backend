@@ -24,6 +24,8 @@ type UserUsecase interface {
 	ReserveBook(ctx context.Context, userID string, bookID string) (*entity.User, error)
 	BorrowBook(ctx context.Context, userID string, bookID string) (*entity.User, error)
 	ExtendBorrowBook(ctx context.Context, userID string, bookID string) (*entity.User, error)
+	GetBorrowList(ctx context.Context, userID string) ([]entity.UserActivity, []entity.UserActivity, error)
+	GetReservationList(ctx context.Context, userID string) ([]entity.UserActivity, error)
 }
 
 type userUsecase struct {
@@ -240,4 +242,32 @@ func (s *userUsecase) ExtendBorrowBook(ctx context.Context, userID string, bookI
 	}
 
 	return user, nil
+}
+
+func (s *userUsecase) GetBorrowList(ctx context.Context, userID string) ([]entity.UserActivity, []entity.UserActivity, error) {
+	user, err := s.userRepo.GetUserByID(ctx, userID)
+
+	if err != nil {
+		return nil, nil, err
+	}
+
+	if user == nil {
+		return nil, nil, entity.ERR_USER_NOT_FOUND
+	}
+
+	return user.BorrowingList, user.BorrowedList, nil
+}
+
+func (s *userUsecase) GetReservationList(ctx context.Context, userID string) ([]entity.UserActivity, error) {
+	user, err := s.userRepo.GetUserByID(ctx, userID)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if user == nil {
+		return nil, entity.ERR_USER_NOT_FOUND
+	}
+
+	return user.ReservingList, nil
 }
