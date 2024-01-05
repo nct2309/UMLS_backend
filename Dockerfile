@@ -1,10 +1,5 @@
-CMD ["docker system prune -a"]
-
 # Start from the latest golang base image
-FROM golang:latest
-
-# Add Maintainer Info
-LABEL maintainer="Your Name <your.email@example.com>"
+FROM golang:1.21
 
 # Set the Current Working Directory inside the container
 WORKDIR /
