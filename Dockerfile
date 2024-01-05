@@ -1,24 +1,23 @@
-# Use the official Golang 1.21 image as the base image
-FROM golang:1.21
+# Start from the latest golang base image
+FROM golang:latest
 
-# Set the working directory inside the container
-WORKDIR /app
+# Add Maintainer Info
+LABEL maintainer="Your Name <your.email@example.com>"
 
-RUN export GOPROXY=""
-RUN export GO111MODULE=on
+# Set the Current Working Directory inside the container
+WORKDIR /
 
-# Copy the main.go file into the container at /app
-COPY . /app
+# Copy the source from the current directory to the Working Directory inside the container
+COPY . .
 
-# Download and install any required dependencies
-RUN go mod download
+# Disable Go Modules
+ENV GO111MODULE=off
 
-# Build the binary
-RUN go build -o myapp .
+# Build the Go app
+RUN go build -o main .
 
-# Expose the port that your application will run on
+# Expose port 8080 to the outside world
 EXPOSE 8080
 
-# Command to run the executable
-CMD ["./myapp"]
-
+# Command to run
+CMD ["./main"]
