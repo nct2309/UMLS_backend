@@ -13,6 +13,7 @@ func (s server) SetupControllers() {
 
 	s.router.Use(gin.Logger())
 	s.router.Use(gin.Recovery())
+	s.router.Use(controller.CORS())
 
 	db := driver.ConnectMongoDB()
 
