@@ -1,3 +1,5 @@
+CMD ["docker system prune -a"]
+
 # Start from the latest golang base image
 FROM golang:latest
 
