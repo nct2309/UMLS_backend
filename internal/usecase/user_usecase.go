@@ -159,7 +159,17 @@ func (s *userUsecase) BorrowBook(ctx context.Context, userID string, bookID stri
 		return nil, entity.ERR_BOOK_NOT_FOUND
 	}
 
-	if book.Availability != 0 {
+	if book.Availability == 2 {
+		// customer borrow book that is reserved by self
+		for i := 0; i < len(user.ReservingList); i++ {
+			if user.ReservingList[i].BookId == book.ID {
+				user.ReservingList = append(user.ReservingList[:i], user.ReservingList[i+1:]...)
+				break
+			} else if i == len(user.ReservingList)-1 {
+				return nil, entity.ERR_BOOK_RESERVED_BY_OTHER
+			}
+		}
+	} else if book.Availability != 0 {
 		return nil, entity.ERR_BOOK_NOT_AVAILABLE
 	}
 
@@ -230,9 +240,19 @@ func (s *userUsecase) ExtendBorrowBook(ctx context.Context, userID string, bookI
 		if user.BorrowingList[i].BookId == book.ID {
 			if user.BorrowingList[i].ExtendedDate.IsZero() {
 				user.BorrowingList[i].ExtendedDate = user.BorrowingList[i].EndDate.AddDate(0, 0, 7)
+
+				book.ExtendedDate = user.BorrowingList[i].ExtendedDate
+				book, err = s.bookRepo.UpdateBook(ctx, bookID, book)
+				if err != nil {
+					return nil, err
+				}
+
+				break
 			} else {
 				return nil, entity.ERR_BOOK_RESERVE_ALREADY_EXTENDED
 			}
+		} else if i == len(user.BorrowingList)-1 {
+			return nil, entity.ERR_BOOK_NOT_BORROWED_BY_USER
 		}
 	}
 

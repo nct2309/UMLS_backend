@@ -79,7 +79,7 @@ func (userRepo *userRepository) GetUserByUsername(ctx context.Context, username 
 		return nil, err
 	}
 
-	if user.Name == "" {
+	if user.Username == "" {
 		return nil, entity.ERR_USER_NOT_FOUND
 	}
 

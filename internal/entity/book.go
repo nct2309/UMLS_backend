@@ -12,6 +12,8 @@ var (
 	ERR_BOOK_NOT_FOUND                = errors.New("Book not found")
 	ERR_BOOK_NOT_AVAILABLE            = errors.New("Book not available")
 	ERR_BOOK_RESERVE_ALREADY_EXTENDED = errors.New("Book reservation already extended")
+	ERR_BOOK_RESERVED_BY_OTHER        = errors.New("Book reserved by other")
+	ERR_BOOK_NOT_BORROWED_BY_USER     = errors.New("Book not borrowed by user")
 )
 
 type Book struct {
